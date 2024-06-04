@@ -38,6 +38,10 @@ jobs:
             libgles2-mesa-dev \
             python3-pip
           pip install buildozer
+          pip install cython  # Install Cython
 
       - name: Build APK
         run: buildozer -v android debug
+
+     
+          
