@@ -1,0 +1,43 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name if needed
+  pull_request:
+    branches:
+      - main  # Replace with your branch name if needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8  # Choose the appropriate Python version
+
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            git \
+            build-essential \
+            ccache \
+            libffi-dev \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-mixer-dev \
+            libsdl2-ttf-dev \
+            pkg-config \
+            libgl-dev \
+            libgles2-mesa-dev \
+            python3-pip
+          pip install buildozer
+
+      - name: Build APK
+        run: buildozer -v android debug
