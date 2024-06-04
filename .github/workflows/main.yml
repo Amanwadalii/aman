@@ -40,8 +40,16 @@ jobs:
           pip install buildozer
           pip install cython  # Install Cython
 
+      - name: Install Android SDK
+        run: |
+          wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
+          unzip commandlinetools-linux-7302050_latest.zip -d cmdline-tools
+          echo 'export ANDROID_SDK_ROOT=$HOME/cmdline-tools' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$HOME/cmdline-tools/tools/bin:$HOME/cmdline-tools/platform-tools' >> $GITHUB_ENV
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+
       - name: Build APK
         run: buildozer -v android debug
 
-     
-          
